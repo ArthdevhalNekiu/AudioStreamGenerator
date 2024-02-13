@@ -39,7 +39,6 @@ func _process(delta):
 	info[0].text = "Exc: " + str(executer.execute( [], $Audio) ) + "- Test: " + str(executer.execute( [], $Audio) )
 	info[1].text = str(hz) + "-" + str($Audio.hz) + "-" + str($Audio.stream.mix_rate)
 	info[2].text = str($Canvas/Frequency/Tone.value)
-	info[3].text = ""
 
 
 func _on_tone_value_change(value):
@@ -60,7 +59,6 @@ func _on_frequency_text_changed(new_text):
 	if new_text.is_valid_float():
 		hz = new_text.to_float()
 		$Audio.hz = hz
-
 
 
 func _on_sound_toggled(toggled_on):
