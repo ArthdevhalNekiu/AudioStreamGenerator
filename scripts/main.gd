@@ -33,7 +33,7 @@ func _ready():
 
 
 func _process(delta):
-	if get_tree().get_frame() % 60 == 0:
+	if get_tree().get_frame() % 60 == 0 and false:
 		screenshot()
 	
 	info[0].text = "Exc: " + str(executer.execute( [], $Audio) ) + "- Test: " + str(executer.execute( [], $Audio) )
