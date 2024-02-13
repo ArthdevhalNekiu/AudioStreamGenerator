@@ -267,7 +267,6 @@ button_pressed = true
 position = Vector2(250, 250)
 shape = SubResource("RectangleShape2D_qg653")
 shape_visible = false
-action = "graphic_move"
 
 [connection signal="toggled" from="Canvas/Sound" to="." method="_on_sound_toggled"]
 [connection signal="value_changed" from="Canvas/Sound/Volume" to="." method="_on_volume_value_changed"]
