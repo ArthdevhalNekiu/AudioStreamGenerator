@@ -1,14 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://b0dw43gg87apt"]
+[gd_scene load_steps=6 format=3 uid="uid://b0dw43gg87apt"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_nkj6a"]
 [ext_resource type="Script" path="res://scripts/audio.gd" id="2_0uyok"]
+[ext_resource type="Script" path="res://scripts/graphic.gd" id="3_fba1v"]
 
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_mqqxt"]
 mix_rate = 22050.0
 buffer_length = 0.15
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qg653"]
-size = Vector2(250, 500)
+size = Vector2(250, 250)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_nkj6a")
@@ -16,23 +17,208 @@ script = ExtResource("1_nkj6a")
 [node name="Cam" type="Camera2D" parent="."]
 
 [node name="Audio" type="AudioStreamPlayer2D" parent="."]
-process_mode = 4
 stream = SubResource("AudioStreamGenerator_mqqxt")
-volume_db = 24.0
+autoplay = true
 script = ExtResource("2_0uyok")
 
-[node name="Equation" type="LineEdit" parent="Audio"]
+[node name="Canvas" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Infos" type="Node2D" parent="Canvas"]
+position = Vector2(12, 0)
+
+[node name="Info1" type="Label" parent="Canvas/Infos"]
+layout_direction = 3
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 176.0
-offset_top = 608.0
-offset_right = 676.0
-offset_bottom = 640.0
+offset_left = -988.0
+offset_top = 12.0
+offset_right = 12.0
+offset_bottom = 44.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 32
+text = "Info"
+vertical_alignment = 1
+text_direction = 2
+
+[node name="Info2" type="Label" parent="Canvas/Infos"]
+layout_direction = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = -988.0
+offset_top = 60.0
+offset_right = 12.0
+offset_bottom = 92.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 32
+text = "Info"
+vertical_alignment = 1
+text_direction = 2
+
+[node name="Info3" type="Label" parent="Canvas/Infos"]
+layout_direction = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = -988.0
+offset_top = 108.0
+offset_right = 12.0
+offset_bottom = 140.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 32
+text = "Info"
+vertical_alignment = 1
+text_direction = 2
+
+[node name="Info4" type="Label" parent="Canvas/Infos"]
+layout_direction = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = -988.0
+offset_top = 156.0
+offset_right = 12.0
+offset_bottom = 188.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 32
+text = "Info"
+vertical_alignment = 1
+text_direction = 2
+
+[node name="Info5" type="Label" parent="Canvas/Infos"]
+layout_direction = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = -988.0
+offset_top = 204.0
+offset_right = 12.0
+offset_bottom = 236.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 32
+text = "Info"
+vertical_alignment = 1
+text_direction = 2
+
+[node name="Sound" type="CheckButton" parent="Canvas"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -221.0
+offset_top = 448.0
+offset_right = -124.0
+offset_bottom = 480.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.641667, 0.63, 0.7, 1)
+text = "Sound"
+alignment = 1
+
+[node name="Volume" type="VSlider" parent="Canvas/Sound"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = -3.0
+offset_top = 32.0
+offset_right = 93.0
+offset_bottom = 288.0
+max_value = 24.0
+
+[node name="Frequency" type="LineEdit" parent="Canvas"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -448.0
+offset_top = 200.0
+offset_right = -352.0
+offset_bottom = 232.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.641667, 0.63, 0.7, 1)
+text = "440.0"
+placeholder_text = "440.0"
+alignment = 1
+max_length = 9
+select_all_on_focus = true
+
+[node name="Tone" type="VSlider" parent="Canvas/Frequency"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_top = 32.0
+offset_right = 96.0
+offset_bottom = 532.0
+max_value = 59.0
+value = 45.0
+rounded = true
+
+[node name="List" type="OptionButton" parent="Canvas/Frequency/Tone"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -64.0
+offset_bottom = -32.0
+grow_horizontal = 2
+alignment = 1
+fit_to_longest_item = false
+allow_reselect = true
+metadata/_edit_use_anchors_ = true
+
+[node name="MixRate" type="LineEdit" parent="Canvas"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -320.0
+offset_top = 200.0
+offset_right = -224.0
+offset_bottom = 232.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.641667, 0.63, 0.7, 1)
+text = "22050"
+placeholder_text = "22050"
+alignment = 1
+max_length = 5
+virtual_keyboard_type = 2
+select_all_on_focus = true
+
+[node name="MixRateSlider" type="VSlider" parent="Canvas/MixRate"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_top = 32.0
+offset_right = 96.0
+offset_bottom = 532.0
+min_value = 5.0
+max_value = 44100.0
+step = 5.0
+value = 22050.0
+
+[node name="Label" type="Label" parent="Canvas/MixRate"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -34.0
+offset_top = -32.0
+offset_right = 34.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.641667, 0.63, 0.7, 1)
+text = "Mix Rate"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Graphic" type="Node2D" parent="."]
+script = ExtResource("3_fba1v")
+
+[node name="Equation" type="LineEdit" parent="Graphic"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 360.0
+offset_top = 546.0
+offset_right = 860.0
+offset_bottom = 578.0
 grow_horizontal = 2
 placeholder_text = "0"
 alignment = 1
 
-[node name="List" type="OptionButton" parent="Audio/Equation"]
+[node name="List" type="OptionButton" parent="Graphic/Equation"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -43,18 +229,21 @@ alignment = 1
 fit_to_longest_item = false
 allow_reselect = true
 
-[node name="Graphic" type="Window" parent="Audio/Equation"]
+[node name="Window" type="Window" parent="Graphic"]
 title = "Graphic"
 initial_position = 1
 size = Vector2i(500, 500)
 unresizable = true
 
-[node name="Line" type="Line2D" parent="Audio/Equation/Graphic"]
+[node name="HLine" type="Line2D" parent="Graphic/Window"]
 position = Vector2(0, 250)
-points = PackedVector2Array(0, 0)
 width = 1.0
 
-[node name="Point" type="Label" parent="Audio/Equation/Graphic"]
+[node name="VLine" type="Line2D" parent="Graphic/Window"]
+points = PackedVector2Array(250, 0, 250, 500)
+width = 1.0
+
+[node name="Zero" type="Label" parent="Graphic/Window"]
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
@@ -67,282 +256,26 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Select" type="TouchScreenButton" parent="Audio/Equation/Graphic"]
-position = Vector2(250, 250)
-shape = SubResource("RectangleShape2D_qg653")
-shape_visible = false
-
-[node name="Draw" type="CheckButton" parent="Audio/Equation/Graphic"]
+[node name="Drawing" type="CheckButton" parent="Graphic/Window"]
 offset_left = 16.0
 offset_top = 16.0
 offset_right = 60.0
 offset_bottom = 40.0
 button_pressed = true
 
-[node name="Line2" type="Line2D" parent="Audio/Equation/Graphic"]
-points = PackedVector2Array(250, 0, 250, 500)
-width = 1.0
+[node name="Select" type="TouchScreenButton" parent="Graphic/Window"]
+position = Vector2(250, 250)
+shape = SubResource("RectangleShape2D_qg653")
+shape_visible = false
+action = "graphic_move"
 
-[node name="Canvas" type="CanvasLayer" parent="."]
-layer = -1
-
-[node name="Bg" type="ColorRect" parent="Canvas"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.8, 0.8, 0.8, 1)
-
-[node name="Infos" type="Node2D" parent="Canvas"]
-position = Vector2(12, 0)
-
-[node name="Info" type="TextEdit" parent="Canvas/Infos"]
-layout_direction = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -1000.0
-offset_bottom = 32.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/background_color = Color(0.8, 0.8, 0.8, 1)
-theme_override_colors/font_readonly_color = Color(0, 0, 0, 1)
-theme_override_constants/line_spacing = 8
-theme_override_constants/outline_size = 32
-theme_override_font_sizes/font_size = 16
-placeholder_text = "INFO"
-editable = false
-context_menu_enabled = false
-shortcut_keys_enabled = false
-selecting_enabled = false
-deselect_on_focus_loss_enabled = false
-drag_and_drop_selection_enabled = false
-virtual_keyboard_enabled = false
-middle_mouse_paste_enabled = false
-scroll_fit_content_height = true
-minimap_width = 0
-
-[node name="Info2" type="TextEdit" parent="Canvas/Infos"]
-layout_direction = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -1000.0
-offset_top = 48.0
-offset_bottom = 80.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/background_color = Color(0.8, 0.8, 0.8, 1)
-theme_override_colors/font_readonly_color = Color(0, 0, 0, 1)
-theme_override_constants/line_spacing = 8
-theme_override_constants/outline_size = 32
-theme_override_font_sizes/font_size = 16
-placeholder_text = "INFO"
-editable = false
-context_menu_enabled = false
-shortcut_keys_enabled = false
-selecting_enabled = false
-deselect_on_focus_loss_enabled = false
-drag_and_drop_selection_enabled = false
-virtual_keyboard_enabled = false
-middle_mouse_paste_enabled = false
-scroll_fit_content_height = true
-minimap_width = 0
-
-[node name="Info3" type="TextEdit" parent="Canvas/Infos"]
-layout_direction = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -1000.0
-offset_top = 96.0
-offset_bottom = 128.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/background_color = Color(0.8, 0.8, 0.8, 1)
-theme_override_colors/font_readonly_color = Color(0, 0, 0, 1)
-theme_override_constants/line_spacing = 8
-theme_override_constants/outline_size = 32
-theme_override_font_sizes/font_size = 16
-placeholder_text = "INFO"
-editable = false
-context_menu_enabled = false
-shortcut_keys_enabled = false
-selecting_enabled = false
-deselect_on_focus_loss_enabled = false
-drag_and_drop_selection_enabled = false
-virtual_keyboard_enabled = false
-middle_mouse_paste_enabled = false
-scroll_fit_content_height = true
-minimap_width = 0
-
-[node name="Info4" type="TextEdit" parent="Canvas/Infos"]
-layout_direction = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -1000.0
-offset_top = 144.0
-offset_bottom = 176.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/background_color = Color(0.8, 0.8, 0.8, 1)
-theme_override_colors/font_readonly_color = Color(0, 0, 0, 1)
-theme_override_constants/line_spacing = 8
-theme_override_constants/outline_size = 32
-theme_override_font_sizes/font_size = 16
-placeholder_text = "INFO"
-editable = false
-context_menu_enabled = false
-shortcut_keys_enabled = false
-selecting_enabled = false
-deselect_on_focus_loss_enabled = false
-drag_and_drop_selection_enabled = false
-virtual_keyboard_enabled = false
-middle_mouse_paste_enabled = false
-scroll_fit_content_height = true
-minimap_width = 0
-
-[node name="Info5" type="TextEdit" parent="Canvas/Infos"]
-layout_direction = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -1000.0
-offset_top = 236.5
-offset_bottom = 275.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/background_color = Color(0.8, 0.8, 0.8, 1)
-theme_override_colors/font_readonly_color = Color(0, 0, 0, 1)
-theme_override_constants/line_spacing = 8
-theme_override_constants/outline_size = 32
-theme_override_font_sizes/font_size = 16
-placeholder_text = "INFO"
-editable = false
-context_menu_enabled = false
-shortcut_keys_enabled = false
-selecting_enabled = false
-deselect_on_focus_loss_enabled = false
-drag_and_drop_selection_enabled = false
-virtual_keyboard_enabled = false
-middle_mouse_paste_enabled = false
-scroll_fit_content_height = true
-minimap_width = 0
-
-[node name="Tono" type="VSlider" parent="Canvas"]
-self_modulate = Color(0, 0, 0, 1)
-offset_left = 64.0
-offset_top = 232.0
-offset_right = 160.0
-offset_bottom = 732.0
-max_value = 59.0
-value = 25.0
-
-[node name="Frequency" type="LineEdit" parent="Canvas/Tono"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -48.0
-offset_top = -32.0
-offset_right = 48.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "440.0"
-placeholder_text = "440.0"
-alignment = 1
-max_length = 9
-select_all_on_focus = true
-
-[node name="Name" type="Label" parent="Canvas/Tono"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_top = -64.0
-offset_right = 20.0
-offset_bottom = -32.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "A"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="MixRateSlider" type="VSlider" parent="Canvas"]
-self_modulate = Color(0, 0, 0, 1)
-offset_left = 192.0
-offset_top = 232.0
-offset_right = 288.0
-offset_bottom = 732.0
-min_value = 5.0
-max_value = 44100.0
-step = 5.0
-value = 22050.0
-
-[node name="MixRate" type="LineEdit" parent="Canvas/MixRateSlider"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -48.0
-offset_top = -32.0
-offset_right = 48.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "22050"
-placeholder_text = "22050"
-alignment = 1
-max_length = 9
-virtual_keyboard_type = 2
-select_all_on_focus = true
-
-[node name="Name" type="Label" parent="Canvas/MixRateSlider"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_top = -64.0
-offset_right = 20.0
-offset_bottom = -32.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Mix Rate"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Volume" type="VSlider" parent="Canvas"]
-self_modulate = Color(0, 0, 0, 1)
-offset_left = 288.0
-offset_top = 480.0
-offset_right = 384.0
-offset_bottom = 736.0
-max_value = 24.0
-value = 12.0
-
-[node name="Sound" type="CheckButton" parent="Canvas/Volume"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -44.5
-offset_top = -32.0
-offset_right = 51.5
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Sound"
-alignment = 1
-
-[connection signal="text_submitted" from="Audio/Equation" to="Audio" method="_on_equation_text_submitted"]
-[connection signal="item_selected" from="Audio/Equation/List" to="Audio" method="_on_list_item_selected"]
-[connection signal="toggled" from="Audio/Equation/Graphic/Draw" to="Audio" method="_on_draw_toggled"]
-[connection signal="value_changed" from="Canvas/Tono" to="." method="_on_tono_value_changed"]
-[connection signal="text_changed" from="Canvas/Tono/Frequency" to="." method="_on_frequency_text_changed"]
-[connection signal="value_changed" from="Canvas/MixRateSlider" to="Audio" method="_on_mix_rate_slider_value_changed"]
-[connection signal="text_changed" from="Canvas/MixRateSlider/MixRate" to="Audio" method="_on_mix_rate_text_changed"]
-[connection signal="drag_ended" from="Canvas/Volume" to="Audio" method="_on_volume_drag_ended"]
-[connection signal="value_changed" from="Canvas/Volume" to="Audio" method="_on_volume_value_changed"]
-[connection signal="toggled" from="Canvas/Volume/Sound" to="Audio" method="_on_check_button_toggled"]
+[connection signal="toggled" from="Canvas/Sound" to="." method="_on_sound_toggled"]
+[connection signal="value_changed" from="Canvas/Sound/Volume" to="." method="_on_volume_value_changed"]
+[connection signal="text_changed" from="Canvas/Frequency" to="." method="_on_frequency_text_changed"]
+[connection signal="value_changed" from="Canvas/Frequency/Tone" to="." method="_on_tone_value_change"]
+[connection signal="item_selected" from="Canvas/Frequency/Tone/List" to="." method="_on_list_tones_selected"]
+[connection signal="text_changed" from="Canvas/MixRate" to="." method="_on_mix_rate_text_changed"]
+[connection signal="value_changed" from="Canvas/MixRate/MixRateSlider" to="." method="_on_mix_rate_slider_value_changed"]
+[connection signal="text_submitted" from="Graphic/Equation" to="Graphic" method="_on_equation_text_submitted"]
+[connection signal="item_selected" from="Graphic/Equation/List" to="Graphic" method="_on_list_equation_selected"]
+[connection signal="toggled" from="Graphic/Window/Drawing" to="Graphic" method="_on_drawing_toggled"]
