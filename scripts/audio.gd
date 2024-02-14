@@ -9,14 +9,14 @@ var phase:float = 0
 
 
 func _process(delta):
-	frame = get_tree().get_frame()
-	increment = hz / stream.mix_rate
-	
 	fill_buffer()
 
 
 func fill_buffer():
-	for i in range(get_stream_playback().get_frames_available()):
+	frame = get_tree().get_frame()
+	increment = hz / stream.mix_rate
+	
+	for i in range(get_stream_playback().get_frames_available() ):
 		var line_ecuation:float = Main.executer.execute( [], self)
 		
 		get_stream_playback().push_frame(Vector2.ONE * line_ecuation )
