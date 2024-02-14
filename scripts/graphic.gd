@@ -1,10 +1,13 @@
 extends Node2D
 
 
+var drawing := true
+
+
 func _ready():
 	for i in Main.node.EQUATION: $Equation/List.add_item(i)
 	
-	for i in range(500): $Window/HLine.add_point(Vector2.RIGHT * i)
+	for i in range(512): $Window/HLine.add_point(Vector2.RIGHT * i)
 
 
 func _process(delta):
@@ -16,23 +19,21 @@ func _process(delta):
 	draw_wave()
 
 
-var drawing := true
 func draw_wave():
-	if not drawing or not Main.node.get_node("Audio").wavepoints.size() == $Window/HLine.points.size(): return
+	if not drawing or not Main.node.get_node("Audio").wavepoints.size() >= $Window/HLine.points.size(): return
 	
-	for i in range($Window/HLine.points.size()):
-		$Window/HLine.points[i].y =  Main.node.get_node("Audio").wavepoints.pop_front() * Main.hz * 0.25
-		$Window/Zero.text = str($Window/HLine.points[int($Window/HLine.points.size() ) / 2].y)
+	for i in range($Window/HLine.points.size() ):
+		$Window/HLine.points[i].y = Main.node.get_node("Audio").wavepoints.pop_front() * Main.hz * 0.25
+		$Window/Zero.text = str($Window/HLine.points[$Window/HLine.points.size() / 2].y)
 
 
-func _on_drawing_toggled(toggled_on):
-	drawing = toggled_on
+func _on_drawing_toggled(toggled_on): drawing = toggled_on
 
 
 func _on_list_equation_selected(index):
 	$Equation.text = $Equation/List.get_item_text(index)
-	_on_equation_text_submitted($Equation.text)
 	
+	_on_equation_text_submitted($Equation.text)
 
 
 func _on_equation_text_submitted(new_text):
@@ -41,13 +42,3 @@ func _on_equation_text_submitted(new_text):
 		return
 	
 	Main.executer.parse(new_text)
-
-
-
-
-
-
-
-
-
-

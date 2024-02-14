@@ -1,20 +1,22 @@
 extends AudioStreamPlayer2D
 
 
-var frame := 0
-var hz := 440.0
-var increment = hz / stream.mix_rate
-var wavepoints := []
-var phase:float = 0
+var wavepoints:Array[float]
+var increment:float
+var phase:float
+var frame:int
+var hz:float
 
 
-func _process(delta):
-	fill_buffer()
+func _init(): stream.buffer_length = 0.15
+
+
+func _process(delta): fill_buffer()
 
 
 func fill_buffer():
-	frame = get_tree().get_frame()
 	increment = hz / stream.mix_rate
+	frame = get_tree().get_frame()
 	
 	for i in range(get_stream_playback().get_frames_available() ):
 		var line_ecuation:float = Main.executer.execute( [], self)
@@ -23,5 +25,5 @@ func fill_buffer():
 		
 		phase = fmod(phase + increment, 1.0)
 		
-		if wavepoints.size() < 500:
-			wavepoints.append(line_ecuation)
+		if wavepoints.size() < 1024: wavepoints.append(line_ecuation)
+
