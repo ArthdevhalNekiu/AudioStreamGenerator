@@ -10,7 +10,8 @@ static var executer := Expression.new()
 const EQUATION:Array[String] = [
 	"0",
 	"sin(phase * TAU)",
-	"2 * sin(phase * TAU) * exp(-3 * phase)"
+	"2 * sin(phase * TAU) * exp(-3 * phase)",
+	"2 * sin(phase * TAU) * exp(-3 * phase) * ( (frame  % 50) +10) * phase)"
 	]
 
 static var frequency : Array[Array] = [ [32.7032, 34.6479, 36.7081, 38.8909, 41.2035, 43.6536, 46.2493, 48.9995, 51.9130, 55.0, 58.2705, 61.7354] ]
@@ -82,7 +83,7 @@ func _on_mix_rate_slider_value_changed(value):
 
 
 func _on_mix_rate_text_changed(new_text):
-	if new_text.is_valid_int():
+	if new_text.is_valid_int() and int(new_text) > 0:
 		$Canvas/MixRate/MixRateSlider.set_value_no_signal(int(new_text) )
 		$Audio.stream.mix_rate = int(new_text)
 
