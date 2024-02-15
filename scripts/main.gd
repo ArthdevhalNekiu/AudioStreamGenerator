@@ -34,6 +34,7 @@ func _ready():
 	$Canvas/Frequency/Tone.value = frequency.size() / 2
 	
 	$Canvas/MixRate/MixRateSlider.max_value = 44100
+	$Canvas/MixRate/MixRateSlider.min_value = 5
 	$Canvas/MixRate/MixRateSlider.value = 22050
 	$Canvas/MixRate/MixRateSlider.step = 5
 	
@@ -44,7 +45,7 @@ func _process(delta):
 	if false and get_tree().get_frame() % 60 == 0:
 		screenshot()
 
-	$Canvas/Info.text = "\nFrame: {Frame}\nTesting: {Test}\nExecuting: {Exc}\nMain-hz: {Mhz}\nMute: {Mute}\nVolume_db: {Vol}\n\nAudio-hz: {Ahz}\nAudio-MixRate: {AMR}\nPhase: {Phase}\nIncrement: {Inc}\n\nDrawPoints: {DP} / {LP}\n\nVariables:\nphase : Float\nframe : Int\nhz : Int\nincrement : Float\nwavepoints : Array[Float]".format( 
+	$Canvas/Info.text = "\nFrame: {Frame}\nTesting: {Test}\nExecuting: {Exc}\nMain-hz: {Mhz}\nMute: {Mute}\nVolume_db: {Vol}\n\nAudio-hz: {Ahz}\nAudio-MixRate: {AMR}\nPhase: {Phase}\nIncrement: {Inc}\n\nDrawPoints: {DP} / {LP}\n\nVariables:\nphase : Float\nframe : Int\nhz : Float\nincrement : Float\nwavepoints : Array[Float]".format( 
 		{"Frame": get_tree().get_frame(), "Test": tester.execute( [], $Audio, false), "Exc": executer.execute( [], $Audio, false), "Mhz": hz, "Mute": AudioServer.is_bus_mute(0), "Vol": $Canvas/Sound/Volume.value, "Ahz": $Audio.hz, "AMR": $Audio.stream.mix_rate, "DP": $Audio.wavepoints.size(), "LP": $Graphic/Window/HLine.points.size(), "Phase": $Audio.phase, "Inc": $Audio.increment} )
 
 
