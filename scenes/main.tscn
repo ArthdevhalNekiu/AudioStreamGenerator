@@ -1,18 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://b0dw43gg87apt"]
+[gd_scene load_steps=7 format=3 uid="uid://b0dw43gg87apt"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_nkj6a"]
 [ext_resource type="Script" path="res://scripts/audio.gd" id="2_0uyok"]
 [ext_resource type="Script" path="res://scripts/graphic.gd" id="3_fba1v"]
+[ext_resource type="CodeHighlighter" uid="uid://bdbbqpih0tgf0" path="res://scripts/code_syntax.tres" id="4_1pcax"]
+[ext_resource type="Script" path="res://scripts/equation.gd" id="5_efxv3"]
 
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_mqqxt"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qg653"]
-size = Vector2(250, 250)
+mix_rate = 22050.0
+buffer_length = 0.15
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_nkj6a")
 
 [node name="Cam" type="Camera2D" parent="."]
+anchor_mode = 0
 
 [node name="Audio" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamGenerator_mqqxt")
@@ -22,76 +24,70 @@ script = ExtResource("2_0uyok")
 [node name="Graphic" type="Node2D" parent="."]
 script = ExtResource("3_fba1v")
 
-[node name="Equation" type="LineEdit" parent="Graphic"]
-anchors_preset = 10
-anchor_right = 1.0
-offset_right = 512.0
-offset_bottom = 32.0
-grow_horizontal = 2
-placeholder_text = "0"
-alignment = 1
+[node name="HLine" type="Line2D" parent="Graphic"]
+position = Vector2(0, 384)
+width = 2.0
 
-[node name="List" type="OptionButton" parent="Graphic/Equation"]
-layout_mode = 0
-offset_top = -580.0
-offset_right = 500.0
-offset_bottom = -548.0
-alignment = 1
-fit_to_longest_item = false
-allow_reselect = true
-
-[node name="Window" type="Window" parent="Graphic"]
-title = "Graphic"
-initial_position = 1
-size = Vector2i(512, 500)
-unresizable = true
-
-[node name="HLine" type="Line2D" parent="Graphic/Window"]
-position = Vector2(0, 250)
+[node name="VLine" type="Line2D" parent="Graphic"]
+points = PackedVector2Array(512, 0, 512, 768)
 width = 1.0
 
-[node name="VLine" type="Line2D" parent="Graphic/Window"]
-points = PackedVector2Array(256, 0, 256, 500)
-width = 1.0
-
-[node name="Zero" type="Label" parent="Graphic/Window"]
-offset_top = 250.0
-offset_right = 512.0
-offset_bottom = 282.0
+[node name="Zero" type="Label" parent="Graphic"]
+offset_left = 384.0
+offset_top = 256.0
+offset_right = 640.0
+offset_bottom = 512.0
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="Drawing" type="CheckButton" parent="Graphic/Window"]
+[node name="Equation" type="CodeEdit" parent="."]
 offset_left = 16.0
 offset_top = 16.0
-offset_right = 60.0
-offset_bottom = 40.0
-button_pressed = true
+offset_right = 1016.0
+offset_bottom = 112.0
+theme_override_constants/line_spacing = 4
+text = "
+0
+"
+syntax_highlighter = ExtResource("4_1pcax")
+highlight_current_line = true
+draw_tabs = true
+indent_automatic = true
+auto_brace_completion_enabled = true
+auto_brace_completion_highlight_matching = true
+script = ExtResource("5_efxv3")
+metadata/_edit_use_anchors_ = true
 
-[node name="Select" type="TouchScreenButton" parent="Graphic/Window"]
-position = Vector2(250, 250)
-shape = SubResource("RectangleShape2D_qg653")
+[node name="Execute" type="Button" parent="Equation"]
+layout_mode = 0
+offset_left = 896.0
+offset_top = 16.0
+offset_right = 960.0
+offset_bottom = 80.0
+text = "RUN"
 
-[node name="Canvas" type="CanvasLayer" parent="."]
-layer = -1
+[node name="Equations" type="OptionButton" parent="."]
+offset_left = 12.0
+offset_top = 720.0
+offset_right = 908.0
+offset_bottom = 768.0
+alignment = 1
+text_overrun_behavior = 3
+fit_to_longest_item = false
+allow_reselect = true
 
-[node name="Info" type="Label" parent="Canvas"]
-layout_direction = 3
-offset_left = 24.0
-offset_right = 1024.0
-offset_bottom = 32.0
-theme_override_constants/line_spacing = 8
-text = "Info"
+[node name="Control" type="Node2D" parent="."]
 
-[node name="Sound" type="CheckButton" parent="Canvas"]
+[node name="Sound" type="CheckButton" parent="Control"]
 offset_left = 288.0
-offset_top = 440.0
+offset_top = 416.0
 offset_right = 386.0
-offset_bottom = 472.0
+offset_bottom = 448.0
 text = "Sound"
 
-[node name="Volume" type="VSlider" parent="Canvas/Sound"]
+[node name="Volume" type="VSlider" parent="Control/Sound"]
 self_modulate = Color(0, 0, 0, 1)
 layout_mode = 0
 offset_top = 32.0
@@ -99,22 +95,23 @@ offset_right = 96.0
 offset_bottom = 288.0
 max_value = 24.0
 
-[node name="Frequency" type="LineEdit" parent="Canvas"]
+[node name="Frequency" type="LineEdit" parent="Control"]
 offset_left = 32.0
-offset_top = 200.0
+offset_top = 192.0
 offset_right = 128.0
-offset_bottom = 232.0
+offset_bottom = 224.0
 alignment = 1
 select_all_on_focus = true
+metadata/_edit_use_anchors_ = true
 
-[node name="Tone" type="VSlider" parent="Canvas/Frequency"]
+[node name="Tone" type="VSlider" parent="Control/Frequency"]
 self_modulate = Color(0, 0, 0, 1)
 layout_mode = 0
 offset_top = 32.0
 offset_right = 96.0
-offset_bottom = 532.0
+offset_bottom = 512.0
 
-[node name="List" type="OptionButton" parent="Canvas/Frequency/Tone"]
+[node name="List" type="OptionButton" parent="Control/Frequency/Tone"]
 layout_mode = 0
 offset_top = -64.0
 offset_right = 96.0
@@ -123,22 +120,28 @@ alignment = 1
 fit_to_longest_item = false
 metadata/_edit_use_anchors_ = true
 
-[node name="MixRate" type="LineEdit" parent="Canvas"]
+[node name="MixRate" type="LineEdit" parent="Control"]
 offset_left = 160.0
-offset_top = 200.0
+offset_top = 192.0
 offset_right = 256.0
-offset_bottom = 232.0
+offset_bottom = 224.0
+text = "22050"
 alignment = 1
 select_all_on_focus = true
+metadata/_edit_use_anchors_ = true
 
-[node name="MixRateSlider" type="VSlider" parent="Canvas/MixRate"]
+[node name="MixRateSlider" type="VSlider" parent="Control/MixRate"]
 self_modulate = Color(0, 0, 0, 1)
 layout_mode = 0
 offset_top = 32.0
 offset_right = 96.0
-offset_bottom = 532.0
+offset_bottom = 512.0
+min_value = 5.0
+max_value = 44100.0
+step = 5.0
+value = 22050.0
 
-[node name="Label" type="Label" parent="Canvas/MixRate"]
+[node name="Label" type="Label" parent="Control/MixRate"]
 layout_mode = 0
 offset_top = -32.0
 offset_right = 96.0
@@ -146,13 +149,28 @@ text = "Mix Rate"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="text_submitted" from="Graphic/Equation" to="Graphic" method="_on_equation_text_submitted"]
-[connection signal="item_selected" from="Graphic/Equation/List" to="Graphic" method="_on_list_equation_selected"]
-[connection signal="toggled" from="Graphic/Window/Drawing" to="Graphic" method="_on_drawing_toggled"]
-[connection signal="toggled" from="Canvas/Sound" to="." method="_on_sound_toggled"]
-[connection signal="value_changed" from="Canvas/Sound/Volume" to="." method="_on_volume_value_changed"]
-[connection signal="text_changed" from="Canvas/Frequency" to="." method="_on_frequency_text_changed"]
-[connection signal="value_changed" from="Canvas/Frequency/Tone" to="." method="_on_tone_value_change"]
-[connection signal="item_selected" from="Canvas/Frequency/Tone/List" to="." method="_on_list_tones_selected"]
-[connection signal="text_changed" from="Canvas/MixRate" to="." method="_on_mix_rate_text_changed"]
-[connection signal="value_changed" from="Canvas/MixRate/MixRateSlider" to="." method="_on_mix_rate_slider_value_changed"]
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 780.0
+offset_top = 160.0
+offset_right = 1036.0
+offset_bottom = 672.0
+color = Color(0.321569, 0.321569, 0.321569, 1)
+
+[node name="Info" type="Label" parent="."]
+offset_left = 12.0
+offset_top = 160.0
+offset_right = 1012.0
+offset_bottom = 192.0
+text = "Info"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[connection signal="button_up" from="Equation/Execute" to="." method="_on_execute_button_up"]
+[connection signal="item_selected" from="Equations" to="." method="_on_equations_item_selected"]
+[connection signal="toggled" from="Control/Sound" to="." method="_on_sound_toggled"]
+[connection signal="value_changed" from="Control/Sound/Volume" to="." method="_on_volume_value_changed"]
+[connection signal="text_changed" from="Control/Frequency" to="." method="_on_frequency_text_changed"]
+[connection signal="value_changed" from="Control/Frequency/Tone" to="." method="_on_tone_value_changed"]
+[connection signal="item_selected" from="Control/Frequency/Tone/List" to="." method="_on_list_tones_selected"]
+[connection signal="text_changed" from="Control/MixRate" to="." method="_on_mix_rate_text_changed"]
+[connection signal="value_changed" from="Control/MixRate/MixRateSlider" to="." method="_on_mix_rate_slider_value_changed"]
